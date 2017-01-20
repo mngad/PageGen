@@ -5,7 +5,8 @@ from shutil import copyfile
 import csv
 cwd = os.getcwd()
 url = 'http://fraun.ddns.net'
-
+dirName = os.path.dirname(cwd)
+print(dirName)
 #template for the python files
 template = """<!DOCTYPE html>
 <html lang="en">
@@ -28,21 +29,20 @@ template = """<!DOCTYPE html>
 </html>
 """
 def getLinks(direc, link, lstOfFiles):
+    print(direc)
     for filename in lstOfFiles:
         if os.path.isdir(direc + '/' + filename):
-            link = link + '<a href="'+ url  +  direc[17:] + '/' + filename + '">' + filename + '</a><br>' + '\n'
+            link = link + '<a href="'+ url  +  direc[len(dirName):] + '/' + filename + '">' + filename + '</a><br>' + '\n'
 
         else:
             continue
     for filename in lstOfFiles: #cycle through files in cwd
         if os.path.isfile(direc + '/' + filename):
-            if '.html' in filename:
-                continue
             if '.css' in filename:
                 continue
             if '.py' in filename:
                 continue
-            link = link + '<a href="'+ url + direc[17:] + '/' + filename + '">' + filename + '</a><br>' + '\n'
+            link = link + '<a href="'+ url + direc[len(dirName):] + '/' + filename + '">' + filename + '</a><br>' + '\n'
         else:
             continue
     return link
@@ -51,7 +51,6 @@ dirList = []
 for root, subdirs, files in os.walk(cwd):
     dirList.append(root)
 
-print(dirList)
 for direc in dirList:
     link = ''
     lst = os.listdir(direc)
