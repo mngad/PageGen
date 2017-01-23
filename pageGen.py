@@ -40,6 +40,8 @@ def getLinks(direc, link, lstOfFiles):
         if os.path.isfile(direc + '/' + filename):
             if '.css' in filename:
                 continue
+            if 'index.html' in filename:
+                continue
             if '.py' in filename:
                 continue
             link = link + '<a href="'+ url + direc[len(dirName):] + '/' + filename + '">' + filename + '</a><br>' + '\n'
@@ -54,6 +56,7 @@ for root, subdirs, files in os.walk(cwd):
 for direc in dirList:
     link = ''
     lst = os.listdir(direc)
+    lst.sort()
     link = getLinks(direc, link, lst)
     context = {                 #context for the tmplate - bits to change - filname etc.
         "links":link
